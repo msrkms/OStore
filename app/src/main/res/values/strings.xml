@@ -4,4 +4,8 @@
     <string name="hintPassword">Password</string>
     <string name="ostoretextbangla">ওস্টোর লগইন</string>
     <string name="ostoreICon">Icon</string>
+    <string name="login">লগইন</string>
+    <string name="donthaveacc">কোন অ্যকাউন্ট নেই?</string>
+    <string name="createnew">তৈরী করুন</string>
+    <string name="forgetPass">পাসওয়ার্ড ভুলে গেছেন?</string>
 </resources>
