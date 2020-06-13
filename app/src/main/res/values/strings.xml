@@ -1,7 +1,18 @@
 <resources>
     <string name="app_name">OStore</string>
-    <string name="hintEmail">Email</string>
-    <string name="hintPassword">Password</string>
+    <string name="hintPhone">ফোন নাম্বার</string>
+    <string name="hintPassword">পাসওয়ার্ড</string>
     <string name="ostoretextbangla">ওস্টোর লগইন</string>
     <string name="ostoreICon">Icon</string>
+    <string name="login">লগইন</string>
+    <string name="donthaveacc">কোন অ্যকাউন্ট নেই?</string>
+    <string name="createnew">তৈরী করুন</string>
+    <string name="forgetPass">পাসওয়ার্ড ভুলে গেছেন?</string>
+    <string name="registration">ওস্টোরে-নিবন্ধন করুন</string>
+    <string name="firstname">আপনার নামের প্রথম অংশ</string>
+    <string name="lastname">নামের শেষ অংশ</string>
+    <string name="confirmpass">পাসওয়ার্ড নিশ্চিতকরণ</string>
+    <string name="createaccbyreg">নিবন্ধন</string>
+    <string name="alreadyhaveacc">ইতিমধ্যে নিবন্ধভুক্ত?</string>
+    <string name="makelogin">লগইন করুন</string>
 </resources>

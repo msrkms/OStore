@@ -4,18 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
-    tools:context=".LogIn">
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/logo"
-        android:contentDescription="@string/ostoreICon"
-        android:layout_marginBottom="10dp"
-        />
-
+    android:orientation="vertical"
+    tools:context=".Registration">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -29,26 +20,62 @@
             android:orientation="vertical"
             >
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="@string/ostoretextbangla"
-               android:textSize="18sp"
-               android:textColor="@color/colorPrimary"
-               android:layout_margin="10dp"
-               android:padding="10dp"
-               />
-            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registration"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="8dp"
+                android:hint="@string/firstname"
+                style="@style/Widget.Ostore.TextInputLayout"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextRegFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/lastname"
+                style="@style/Widget.Ostore.TextInputLayout"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextRegLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:hint="@string/hintPhone"
                 style="@style/Widget.Ostore.TextInputLayout"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextLoginPhone"
+                    android:id="@+id/textInputEditTextRegPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
@@ -56,35 +83,35 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right"
-                android:layout_margin="10dp"
-                >
-
-                <TextView
-                    android:id="@+id/textForgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/forgetPass"
-                    android:textColor="@color/colorPrimary"
-                    />
-            </LinearLayout>
-
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="8dp"
                 android:hint="@string/hintPassword"
                 style="@style/Widget.Ostore.TextInputLayout"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextLoginPassword"
+                    android:id="@+id/textInputEditTextRegPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="@string/confirmpass"
+                style="@style/Widget.Ostore.TextInputLayout"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextRegPasswordConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -101,11 +128,11 @@
                 >
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/logInButton"
+                    android:id="@+id/registrationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/login"
-                    android:layout_margin="10dp"
+                    android:text="@string/createaccbyreg"
+                    android:layout_margin="8dp"
 
                     />
 
@@ -113,7 +140,7 @@
 
 
 
-            
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -126,16 +153,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/donthaveacc"
+            android:text="@string/alreadyhaveacc"
             />
         <TextView
-            android:id="@+id/createAnAccount"
+            android:id="@+id/gotoLoginPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/createnew"
+            android:text="@string/makelogin"
             android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
+
 
 
 
