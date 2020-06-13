@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">OStore</string>
+    <string name="hintEmail">Email</string>
+    <string name="hintPassword">Password</string>
+    <string name="ostoretextbangla">ওস্টোর লগইন</string>
+    <string name="ostoreICon">Icon</string>
 </resources>
