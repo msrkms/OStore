@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+    <group>
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/monitor"
+            android:title="ড্যাশবোর্ড" />
+
+        <item
+            android:id="@+id/nav_sell"
+            android:icon="@drawable/shopping_cart"
+            android:title="বেচা-বিক্রি" />
+
+        <item
+        android:id="@+id/nav_qsell"
+        android:icon="@drawable/monitor"
+        android:title="কুইক সেল" />
+
+        <item
+            android:id="@+id/nav_stock"
+            android:icon="@drawable/shopping_cart"
+            android:title="স্টক" />
+        <item
+            android:id="@+id/nav_sellbook"
+            android:icon="@drawable/shopping_cart"
+            android:title="বিক্রির খাতা" />
+
+        <item
+            android:id="@+id/nav_reportbook"
+            android:icon="@drawable/monitor"
+            android:title="হিসাব খাতা" />
+    </group>
+
+    <item android:title="রিপোর্ট">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_sellreport"
+                    android:icon="@drawable/monitor"
+                    android:title="বিক্রির রিপোর্ট" />
+
+                <item
+                    android:id="@+id/nav_loss_profit"
+                    android:icon="@drawable/shopping_cart"
+                    android:title="লাভ-ক্ষতির রিপোর্ট" />
+
+                <item
+                    android:id="@+id/nav_buy_report"
+                    android:icon="@drawable/monitor"
+                    android:title="ক্রয় রিপোর্ট" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="পণ্য">
+
+        <menu>
+
+            <item
+                android:id="@+id/nav_product_category"
+                android:icon="@drawable/monitor"
+                android:title="পণ্যের ক্যাটাগরি" />
+
+            <item
+                android:id="@+id/nav_all_product"
+                android:icon="@drawable/shopping_cart"
+                android:title="সকল পণ্য" />
+            <item
+                android:id="@+id/nav_product_buy"
+                android:icon="@drawable/monitor"
+                android:title="পণ্য ক্রয়" />
+
+            <item
+                android:id="@+id/nav_product_list"
+                android:icon="@drawable/shopping_cart"
+                android:title="ক্রয়কৃত লেজার দেখুন" />
+        </menu>
+    </item>
+
+        <item android:title="">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_customer"
+                        android:icon="@drawable/monitor"
+                        android:title="গ্রাহক তালিকা" />
+
+                    <item
+                        android:id="@+id/nav_vendor"
+                        android:icon="@drawable/shopping_cart"
+                        android:title="ভেন্ডরদের তালিক" />
+
+                    <item
+                        android:id="@+id/nav_extra"
+                        android:icon="@drawable/monitor"
+                        android:title="বাড়তি আয়-ব্যয় " />
+                </group>
+
+            </menu>
+        </item>
+
+
+
+
+
+
+
+
+        <item android:title="ব্যাংক হিসাব">
+
+            <menu>
+
+                <group android:checkableBehavior="single">
+
+                    <item
+                        android:id="@+id/nav_bank"
+                        android:icon="@drawable/monitor"
+                        android:title="ব্যাংক যোগ ও ব্যালেন্স দেখুন" />
+
+                    <item
+                        android:id="@+id/nav_transaction"
+                        android:icon="@drawable/shopping_cart"
+                        android:title="ট্রানসাকশান দেখুন" />
+
+                </group>
+            </menu>
+        </item>
+        <item android:title="">
+        <menu>
+            <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_borrow"
+            android:icon="@drawable/monitor"
+            android:title="ধার-দেনা" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/monitor"
+            android:title="পরিচিতি" />
+            </group>
+
+        </menu>
+        </item>
+
+    </group>
+</menu>

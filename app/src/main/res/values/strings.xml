@@ -15,4 +15,7 @@
     <string name="createaccbyreg">নিবন্ধন</string>
     <string name="alreadyhaveacc">ইতিমধ্যে নিবন্ধভুক্ত?</string>
     <string name="makelogin">লগইন করুন</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
