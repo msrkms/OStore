@@ -15,6 +15,19 @@
     <string name="createaccbyreg">নিবন্ধন</string>
     <string name="alreadyhaveacc">ইতিমধ্যে নিবন্ধভুক্ত?</string>
     <string name="makelogin">লগইন করুন</string>
+    <string name="quicksell">কুইক সেল</string>
+    <string name="cashsell">নগদ বিক্রি</string>
+    <string name="duesell">বাকিতে বিক্রি</string>
+    <string name="downsell">কিস্তিতে বিক্রি</string>
+    <string name="shortdetails">সংক্ষিপ্ত রিপোর্ট</string>
+    <string name="totalsell">সর্বমোট বিক্রয়</string>
+    <string name="receive">গ্রহীত</string>
+    <string name="due">বকেয়া</string>
+    <string name="others">অন্যান্য আয়</string>
+    <string name="cost">ব্যায়</string>
+    <string name="weeklysell">সাপ্তাহিক বিক্রয়</string>
+    <string name="monthlysell">মাসিক বিক্রয়</string>
+    <string name="yearlysell">বাৎসরিক বিক্রয়</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
