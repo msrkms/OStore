@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     tools:context=".AdminDashboard">
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,6 +52,8 @@
             android:background="@drawable/spinner_background"
             app:layout_constraintEnd_toStartOf="@+id/spinnerProfile"
             app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -57,8 +66,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"/>
-
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,11 +1,15 @@
 package com.atlassoftwarepark.ostore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -19,7 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class AdminDashboard extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AdminDashboard extends AppCompatActivity implements AdapterView.OnItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayoutDashboard;
     private NavigationView navigationViewDashboad;
@@ -45,6 +49,14 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
         ActionBarDrawerToggle actionBarDrawerToggleDashboard = new ActionBarDrawerToggle(this,drawerLayoutDashboard,toolbarDashboard,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayoutDashboard.addDrawerListener(actionBarDrawerToggleDashboard);
         actionBarDrawerToggleDashboard.syncState();
+        navigationViewDashboad.setNavigationItemSelectedListener(this);
+
+        if(savedInstanceState==null){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer,new DashboadMainFragment())
+                    .commit();
+            navigationViewDashboad.setCheckedItem(R.id.nav_dashboard);
+        }
 
         customListprofile = getCustomListProfile();
         adapterprofile = new ProfileDropDownAdepter(this, customListprofile);
@@ -133,5 +145,18 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_dashboard:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer,new DashboadMainFragment())
+                        .commit();
+                break;
+        }
+        drawerLayoutDashboard.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
