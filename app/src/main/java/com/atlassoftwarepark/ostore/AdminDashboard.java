@@ -115,10 +115,10 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
     private ArrayList<NotificationSpinnerItem> getCustomListNotification() {
         customListNotification = new ArrayList<>();
 
-        customListNotification.add(new NotificationSpinnerItem(" Notification","",R.drawable.notification));
-        customListNotification.add(new NotificationSpinnerItem(" Jhon Deo ","Please Check your mail",R.drawable.user_2));
-        customListNotification.add(new NotificationSpinnerItem(" Sarah Smith ","Request for leave application",R.drawable.profile));
-        customListNotification.add(new NotificationSpinnerItem(" Jacob Rayan ","Your Payment invoice is generated",R.drawable.user_4));
+        customListNotification.add(new NotificationSpinnerItem("Notification","",R.drawable.notification));
+        customListNotification.add(new NotificationSpinnerItem("Jhon Deo ","Please Check your mail",R.drawable.user_2));
+        customListNotification.add(new NotificationSpinnerItem("Sarah Smith ","Request for leave application",R.drawable.profile));
+        customListNotification.add(new NotificationSpinnerItem("Jacob Rayan ","Your Payment invoice is generated",R.drawable.user_4));
 
 
         return customListNotification;
