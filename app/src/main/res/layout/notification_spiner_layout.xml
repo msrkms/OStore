@@ -7,9 +7,8 @@
 
     <ImageView
         android:id="@+id/ivNotification"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         />
 
     <LinearLayout
