@@ -155,6 +155,9 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
                         .replace(R.id.fragmentContainer,new DashboadMainFragment())
                         .commit();
                 break;
+            case R.id.nav_sellreport:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new SellReportFragment()).commit();
+                break;
         }
         drawerLayoutDashboard.closeDrawer(GravityCompat.START);
         return true;
