@@ -28,6 +28,19 @@
     <string name="weeklysell">সাপ্তাহিক বিক্রয়</string>
     <string name="monthlysell">মাসিক বিক্রয়</string>
     <string name="yearlysell">বাৎসরিক বিক্রয়</string>
+    <string name="productsellreport">বিক্রিত পণ্যের রিপোর্ট</string>
+    <string name="usedaterange">তারিখ পরিশীমা ব্যবহার করে রিপোর্ট দেখুন</string>
+    <string name="startdate">শুরু তারিখ</string>
+    <string name="enddate">শেষ পর্যন্ত</string>
+    <string name="action">Action</string>
+    <string name="totalsellreport">সর্বমোট বিক্রি:</string>
+    <string name="taka">টাকা</string>
+    <string name="invoice">ইনভয়েস নং</string>
+    <string name="productname">প্রোডাক্ট নাম</string>
+    <string name="sellDate">বিক্রির তারিখ</string>
+    <string name="quantity">পরিমাণ</string>
+    <string name="unitprice">ইউনিট মূল্য</string>
+    <string name="total">সর্বমোট</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
