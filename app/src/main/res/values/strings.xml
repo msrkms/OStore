@@ -41,6 +41,22 @@
     <string name="quantity">পরিমাণ</string>
     <string name="unitprice">ইউনিট মূল্য</string>
     <string name="total">সর্বমোট</string>
+    <string name="buyedproductreport">ক্রয়ক্রিত পন্যের রিপোর্ট</string>
+
+    <string name="productCategory">পণ্য ক্যাটাগরি</string>
+    <string name="buyDate">ক্রয়ের তারিখ</string>
+    <string name="vendor">ভেন্ডর</string>
+    <string name="actionBangla">অ্যাকশন</string>
+    <string name="totalBuyed">সর্বমোট ক্রয়:</string>
+
+    <string name="profitLossText">লাভ-ক্ষতির রিপোর্ট দেখুন</string>
+    <string name="totalBuyRate">সর্বমোট ক্রয়মূল্য</string>
+    <string name="totalSellRate">সর্বমোট বিক্রয়মূল্য</string>
+    <string name="status">স্ট্যাটাস</string>
+
+    <string name="allcategoryavgbuyrate">সব ক্যাটাগরির অ্যাভারেজ ক্রয়মূল্য:</string>
+    <string name="averagesellrate">অ্যাভারেজ বিক্রয়মূল্য:></string>
+    <string name="profitloss">লাভ-ক্ষতি:</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
