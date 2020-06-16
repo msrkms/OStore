@@ -28,32 +28,33 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
     private DrawerLayout drawerLayoutDashboard;
     private NavigationView navigationViewDashboad;
     private Toolbar toolbarDashboard;
-    Spinner customSpinnerProfile,customSpinnerNotification;
+    Spinner customSpinnerProfile, customSpinnerNotification;
     ArrayList<CustomProfileSpinnerItem> customListprofile;
     ArrayList<NotificationSpinnerItem> customListNotification;
-    private int previousposition=-1;
+    private int previousposition = -1;
     ProfileDropDownAdepter adapterprofile;
     NotificationDropDownAdepter adepterNotification;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        drawerLayoutDashboard=findViewById(R.id.dashboad_drawerLayout);
-        navigationViewDashboad=findViewById(R.id.nav_view);
+        drawerLayoutDashboard = findViewById(R.id.dashboad_drawerLayout);
+        navigationViewDashboad = findViewById(R.id.nav_view);
         toolbarDashboard = (Toolbar) findViewById(R.id.toolbar);
-        customSpinnerProfile =findViewById(R.id.spinnerProfile);
-        customSpinnerNotification=findViewById(R.id.spinnerNotification);
+        customSpinnerProfile = findViewById(R.id.spinnerProfile);
+        customSpinnerNotification = findViewById(R.id.spinnerNotification);
         setSupportActionBar(toolbarDashboard);
 
-        ActionBarDrawerToggle actionBarDrawerToggleDashboard = new ActionBarDrawerToggle(this,drawerLayoutDashboard,toolbarDashboard,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle actionBarDrawerToggleDashboard = new ActionBarDrawerToggle(this, drawerLayoutDashboard, toolbarDashboard, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayoutDashboard.addDrawerListener(actionBarDrawerToggleDashboard);
         actionBarDrawerToggleDashboard.syncState();
         navigationViewDashboad.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer,new DashboadMainFragment())
+                    .replace(R.id.fragmentContainer, new DashboadMainFragment())
                     .commit();
             navigationViewDashboad.setCheckedItem(R.id.nav_dashboard);
         }
@@ -65,20 +66,20 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
             customSpinnerProfile.setOnItemSelectedListener(this);
         }
 
-        customListNotification=getCustomListNotification();
-        adepterNotification =new NotificationDropDownAdepter(this,customListNotification);
-        if(customSpinnerNotification!=null){
+        customListNotification = getCustomListNotification();
+        adepterNotification = new NotificationDropDownAdepter(this, customListNotification);
+        if (customSpinnerNotification != null) {
             customSpinnerNotification.setAdapter(adepterNotification);
 
         }
         customSpinnerNotification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if(position==0){
+                if (position == 0) {
 
-                }else{
+                } else {
                     NotificationSpinnerItem item = (NotificationSpinnerItem) adapterView.getSelectedItem();
-                    Toast.makeText(AdminDashboard.this,item.getSpinnerMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminDashboard.this, item.getSpinnerMessage(), Toast.LENGTH_SHORT).show();
                     customSpinnerNotification.setSelection(0);
                 }
             }
@@ -88,7 +89,6 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
 
             }
         });
-
 
 
     }
@@ -115,10 +115,10 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
     private ArrayList<NotificationSpinnerItem> getCustomListNotification() {
         customListNotification = new ArrayList<>();
 
-        customListNotification.add(new NotificationSpinnerItem("Notification","",R.drawable.notification));
-        customListNotification.add(new NotificationSpinnerItem("Jhon Deo ","Please Check your mail",R.drawable.user_2));
-        customListNotification.add(new NotificationSpinnerItem("Sarah Smith ","Request for leave application",R.drawable.profile));
-        customListNotification.add(new NotificationSpinnerItem("Jacob Rayan ","Your Payment invoice is generated",R.drawable.user_4));
+        customListNotification.add(new NotificationSpinnerItem("Notification", "", R.drawable.notification));
+        customListNotification.add(new NotificationSpinnerItem("Jhon Deo ", "Please Check your mail", R.drawable.user_2));
+        customListNotification.add(new NotificationSpinnerItem("Sarah Smith ", "Request for leave application", R.drawable.profile));
+        customListNotification.add(new NotificationSpinnerItem("Jacob Rayan ", "Your Payment invoice is generated", R.drawable.user_4));
 
 
         return customListNotification;
@@ -129,15 +129,13 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 
 
-        if(position==0){
+        if (position == 0) {
 
-        }else{
+        } else {
             CustomProfileSpinnerItem item = (CustomProfileSpinnerItem) adapterView.getSelectedItem();
             Toast.makeText(this, item.getSpinnerItemName(), Toast.LENGTH_SHORT).show();
             customSpinnerProfile.setSelection(0);
         }
-
-
 
 
     }
@@ -149,19 +147,27 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_dashboard:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer,new DashboadMainFragment())
+                        .replace(R.id.fragmentContainer, new DashboadMainFragment())
                         .commit();
                 break;
             case R.id.nav_sellreport:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new SellReportFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new SellReportFragment()).commit();
                 break;
             case R.id.nav_stock:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer,new StockFragment())
+                        .replace(R.id.fragmentContainer, new StockFragment())
                         .commit();
+                break;
+
+            case R.id.nav_buy_report:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new BuyedProductReportFragment()).commit();
+                break;
+
+            case R.id.nav_loss_profit:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new ProfitLossFragment()).commit();
                 break;
         }
         drawerLayoutDashboard.closeDrawer(GravityCompat.START);
