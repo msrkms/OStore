@@ -58,6 +58,14 @@
     <string name="averagesellrate">অ্যাভারেজ বিক্রয়মূল্য:></string>
     <string name="profitloss">লাভ-ক্ষতি:</string>
 
+    <string name="loanDate">তারিখ</string>
+    <string name="loanAmount">টাকার পরিমাণ</string>
+    <string name="loanStatus">স্ট্যাটাস</string>
+    <string name="loanMarfot">মারফৎ</string>
+    <string name="loanAction">অ্যাকশন</string>
+
+    <string name="addBorrow">ধার-দেনা যুক্ত করুন</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
