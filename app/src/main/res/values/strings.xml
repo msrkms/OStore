@@ -65,6 +65,12 @@
     <string name="loanAction">অ্যাকশন</string>
 
     <string name="addBorrow">ধার-দেনা যুক্ত করুন</string>
+    <string name="addBank">ব্যাংক যুক্ত করুন</string>
+
+    <string name="bankName">ব্যাংকের নাম</string>
+    <string name="accountType">অ্যাকাউন্ট ধরণ</string>
+    <string name="accountNumber">অ্যাকাউন্ট নাম্বার</string>
+    <string name="openingBalance">ওপেনিং ব্যালেন্স</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
