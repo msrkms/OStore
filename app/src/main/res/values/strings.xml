@@ -72,6 +72,11 @@
     <string name="accountNumber">অ্যাকাউন্ট নাম্বার</string>
     <string name="openingBalance">ওপেনিং ব্যালেন্স</string>
 
+    <string name="doTransaction">ট্রান্সেকশন করুন</string>
+    <string name="operationTransaction">অপারেশন</string>
+    <string name="addTransaction">ট্রান্সেকশন অ্যাড করুন</string>
+    <string name="selectBankTxt">ব্যাংকের নাম নির্বাচন করুন</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
