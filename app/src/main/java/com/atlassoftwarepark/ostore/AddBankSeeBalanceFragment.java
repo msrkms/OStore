@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -113,6 +114,7 @@ public class AddBankSeeBalanceFragment extends Fragment {
         Spinner categoryAccount;
         final TextInputEditText bankNameEditText, accNumberEditText, openingBalanceEditText;
         MaterialButton bankAddButton;
+        ImageButton closeBankPopUp;
         View pop = inflater.inflate(R.layout.add_bank_balance, null);
         categoryAccount = (Spinner) pop.findViewById(R.id.spinnerAccountCategory);
         bankNameEditText = (TextInputEditText) pop.findViewById(R.id.textInputEditTextBankName);
@@ -120,6 +122,7 @@ public class AddBankSeeBalanceFragment extends Fragment {
         openingBalanceEditText = (TextInputEditText) pop.findViewById(R.id.textInputEditTextOpeningBalance);
         bankAddButton = (MaterialButton) pop.findViewById(R.id.bankAddBtn);
 
+        closeBankPopUp=(ImageButton)pop.findViewById(R.id.closeDialogBank);
 
         ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<String>(
                 getActivity(),
@@ -135,6 +138,14 @@ public class AddBankSeeBalanceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), bankNameEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+                builder.dismiss();
+            }
+        });
+
+
+        closeBankPopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 builder.dismiss();
             }
         });
