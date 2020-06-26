@@ -77,6 +77,13 @@
     <string name="addTransaction">ট্রান্সেকশন অ্যাড করুন</string>
     <string name="selectBankTxt">ব্যাংকের নাম নির্বাচন করুন</string>
 
+    <string name="totalIncome">সর্বমোট আয়</string>
+    <string name="totalCost">সর্বমোট ব্যয়</string>
+    <string name="savings">সঞ্চিত অর্থ</string>
+
+    <string name="from">উৎস</string>
+    <string name="addIncomeCost">আয়-ব্যায় অ্যাড করুন</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
