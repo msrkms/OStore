@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -118,11 +119,14 @@ public class TransactionAddSeeFragment extends Fragment {
         ImageView dateSelect;
         Spinner bankSpinner,operationSpinner;
         MaterialButton addTransactionBtn;
+        ImageButton closeBtn;
         dateSelect=(ImageView)addTransaction.findViewById(R.id.transactionDateSelect);
         textInputEditTextDate=(TextInputEditText)addTransaction.findViewById(R.id.textInputEditTextTransactionDate);
         textInputEditTextAccountNumber=(TextInputEditText)addTransaction.findViewById(R.id.textInputEditTextTransactionAccountNumber);
         textInputEditTextAmount=(TextInputEditText)addTransaction.findViewById(R.id.textInputEditTextTransactionAmount);
         textInputEditTextMarfot=(TextInputEditText)addTransaction.findViewById(R.id.textInputEditTextTransactionMarfot);
+
+        closeBtn=(ImageButton)addTransaction.findViewById(R.id.closeDialogTransaction);
 
         bankSpinner=(Spinner)addTransaction.findViewById(R.id.spinnerBankCategory);
         operationSpinner=(Spinner)addTransaction.findViewById(R.id.spinnerOperationCategory);
@@ -165,6 +169,13 @@ public class TransactionAddSeeFragment extends Fragment {
         alertDialog.show();
 
         addTransactionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
