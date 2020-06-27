@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/maincontainer"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         >
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
@@ -191,9 +192,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/recyclerViewProductSell" />
 
                 <HorizontalScrollView
-                    android:visibility="gone"
                     android:id="@+id/installmentLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -272,8 +272,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/installmentLayout" />
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="  "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
