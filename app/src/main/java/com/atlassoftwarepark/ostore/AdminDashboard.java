@@ -156,6 +156,9 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
             case R.id.nav_sellreport:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new SellReportFragment()).commit();
                 break;
+            case R.id.nav_sell:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new SellFragment()).commit();
+                break;
             case R.id.nav_stock:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, new StockFragment())
