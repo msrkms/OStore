@@ -83,6 +83,19 @@
 
     <string name="from">উৎস</string>
     <string name="addIncomeCost">আয়-ব্যায় অ্যাড করুন</string>
+    <string name="newVendorTxt">নতুন ভেন্ডর অ্যাড করুন</string>
+    <string name="vendorName">ভেন্ডর নাম</string>
+    <string name="vendorPhn">ফোন নাম্বার</string>
+    <string name="vendorInstitution">প্রতিষ্ঠানের নাম</string>
+    <string name="vendorAddress">ঠিকানা</string>
+
+    <string name="customerName">কাস্টমার নাম</string>
+
+    <string name="addNewCategory">নতুন ক্যাটাগরি অ্যাড করুন</string>
+
+    <string name="categoryName">ক্যাটাগরি নাম</string>
+    <string name="registeredDate">নিবন্ধিত তারিখ</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
