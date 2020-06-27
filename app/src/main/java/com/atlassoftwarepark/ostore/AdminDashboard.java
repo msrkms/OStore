@@ -164,7 +164,9 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
                         .replace(R.id.fragmentContainer, new StockFragment())
                         .commit();
                 break;
-
+            case R.id.nav_reportbook:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new AccountsBookFragment()).commit();
+                break;
             case R.id.nav_buy_report:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new BuyedProductReportFragment()).commit();
                 break;
