@@ -1,5 +1,6 @@
 package com.atlassoftwarepark.ostore;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class SellFragment extends Fragment {
     private Spinner spinnerCategory,spinnerTimeType,spinnerCustomer,spinnersellType;
     private HorizontalScrollView horizontalScrollViewInstallment;
     private MaterialButton materialButtonSell;
+    private MaterialTextView materialAddNewCustomer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +79,16 @@ public class SellFragment extends Fragment {
         // Inflate the layout for this fragment
         View viewSell= inflater.inflate(R.layout.fragment_sell, container, false);
         spinnerCategory=(Spinner) viewSell.findViewById(R.id.spinnerAllProduct);
+        materialAddNewCustomer=(MaterialTextView)viewSell.findViewById(R.id.materialTextViewAddNewCustomer);
+
+        materialAddNewCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
+
+
         ArrayAdapter<String> arrayAdapterCategory=new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.support_simple_spinner_dropdown_item,
@@ -167,6 +182,32 @@ public class SellFragment extends Fragment {
         cutomer.add("Customer One");
 
         return cutomer;
+
+    }
+
+    private void showDialog(){
+
+        View dialogCustomer = LayoutInflater.from(getContext()).inflate(R.layout.add_new_customer_layout,null);
+
+        ImageButton closeDiaglogThis;
+        TextInputEditText customerName,customerPhone,customerAddress;
+
+        customerName=(TextInputEditText)dialogCustomer.findViewById(R.id.textInputEditTextAddCustomerName);
+        customerPhone=(TextInputEditText)dialogCustomer.findViewById(R.id.textInputEditTextAddCustomerPhone);
+        customerAddress=(TextInputEditText)dialogCustomer.findViewById(R.id.textInputEditTextAddCustomerAddress);
+        closeDiaglogThis=(ImageButton)dialogCustomer.findViewById(R.id.closeDialogAddCustomer);
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).setView(dialogCustomer).create();
+        alertDialog.show();
+
+        closeDiaglogThis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+
 
     }
 
