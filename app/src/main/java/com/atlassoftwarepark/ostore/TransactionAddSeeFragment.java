@@ -84,6 +84,7 @@ public class TransactionAddSeeFragment extends Fragment {
         linearLayoutTransaction=(LinearLayout)transactionView.findViewById(R.id.layoutTransaction);
         recyclerView=(RecyclerView)transactionView.findViewById(R.id.recyclerTransaction);
 
+
         transactionItems=new ArrayList<TransactionItem>();
 
         TransactionItem transactionItem= new TransactionItem();

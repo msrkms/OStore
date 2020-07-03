@@ -164,7 +164,9 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
                         .replace(R.id.fragmentContainer, new StockFragment())
                         .commit();
                 break;
-
+            case R.id.nav_reportbook:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new AccountsBookFragment()).commit();
+                break;
             case R.id.nav_buy_report:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new BuyedProductReportFragment()).commit();
                 break;
@@ -205,6 +207,9 @@ public class AdminDashboard extends AppCompatActivity implements AdapterView.OnI
                 break;
             case R.id.nav_qsell:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new QuickSellFragment()).commit();
+                break;
+            case R.id.nav_product_buy:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new ProductBuyFragment()).commit();
                 break;
         }
         drawerLayoutDashboard.closeDrawer(GravityCompat.START);
