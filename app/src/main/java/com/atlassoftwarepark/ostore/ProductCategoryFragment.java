@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.atlassoftwarepark.ostore.Adepter.ProductItem;
 import com.atlassoftwarepark.ostore.Adepter.RecyclerViewProductCategoryAdapter;
+import com.atlassoftwarepark.ostore.BackEnd.DateTimeConverter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -125,7 +126,8 @@ public class ProductCategoryFragment extends Fragment {
             public void onClick(View view) {
                 String Category=textInputEditTextProductCategory.getText().toString();
                 String Date=textInputEditTextDate.getText().toString();
-                System.out.println(Category+Date);
+                DateTimeConverter dateTimeConverter=new DateTimeConverter();
+
 
             }
         });
@@ -142,7 +144,7 @@ public class ProductCategoryFragment extends Fragment {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
                         textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
-                        
+
                     }
                 });
 
