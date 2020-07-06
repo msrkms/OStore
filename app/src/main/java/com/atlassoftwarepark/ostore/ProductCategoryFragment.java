@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.atlassoftwarepark.ostore.Adepter.ProductItem;
 import com.atlassoftwarepark.ostore.Adepter.RecyclerViewProductCategoryAdapter;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -111,10 +112,23 @@ public class ProductCategoryFragment extends Fragment {
 
         ImageButton closeDialogProduct;
         ImageView dateSelect;
-        final TextInputEditText textInputEditTextDate;
+        MaterialButton materialButtonAdd;
+        final TextInputEditText textInputEditTextDate,textInputEditTextProductCategory;
         closeDialogProduct=(ImageButton)addProduct.findViewById(R.id.closeDialogProduct);
         dateSelect=(ImageView)addProduct.findViewById(R.id.addProductDateSelect);
         textInputEditTextDate=(TextInputEditText)addProduct.findViewById(R.id.textInputEditTextAddProductDate);
+        textInputEditTextProductCategory=(TextInputEditText)addProduct.findViewById(R.id.textInputEditTextProductCategory);
+        materialButtonAdd=(MaterialButton) addProduct.findViewById(R.id.TransactionAddBtn);
+
+        materialButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String Category=textInputEditTextProductCategory.getText().toString();
+                String Date=textInputEditTextDate.getText().toString();
+                System.out.println(Category+Date);
+
+            }
+        });
 
         dateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +142,7 @@ public class ProductCategoryFragment extends Fragment {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
                         textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
+                        
                     }
                 });
 
