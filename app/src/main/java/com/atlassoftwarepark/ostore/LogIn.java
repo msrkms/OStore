@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
+import com.atlassoftwarepark.ostore.BackEnd.DataHold;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -50,6 +51,7 @@ public class LogIn extends AppCompatActivity {
                String PhoneNumber=textInputEditTextPhoneNumber.getText().toString();
                String Password=textInputEditTextPassword.getText().toString();
 
+                System.out.println("SSSSSSSSSSSSSSSS");
                Login(PhoneNumber,Password);
             }
         });
@@ -66,6 +68,7 @@ public class LogIn extends AppCompatActivity {
                     public void onResponse(String response) {
                         int data=Character.getNumericValue(response.charAt(1));
                         if(data==1){
+                            DataHold.phn=PhoneNumber;
                             startActivity(new Intent(LogIn.this,AdminDashboard.class));
                             LogIn.this.finish();
                         }else if(data==0){
@@ -95,6 +98,7 @@ public class LogIn extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
             }
         }){
             @Override

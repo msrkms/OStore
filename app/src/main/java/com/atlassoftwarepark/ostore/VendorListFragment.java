@@ -1,6 +1,7 @@
 package com.atlassoftwarepark.ostore;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,11 +14,25 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.atlassoftwarepark.ostore.Adepter.RecyclerViewVendorAdapter;
 import com.atlassoftwarepark.ostore.Adepter.VendorItem;
+import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
+import com.atlassoftwarepark.ostore.BackEnd.DataHold;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +44,8 @@ public class VendorListFragment extends Fragment {
     LinearLayout linearAddVendor;
     RecyclerView recyclerView;
     ArrayList<VendorItem> vendorItems;
+    ProgressDialog progressDialog;
+    String vendorHolder;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,6 +97,7 @@ public class VendorListFragment extends Fragment {
 
         vendorItems=new ArrayList<VendorItem>();
         VendorItem vendorItem=new VendorItem();
+        vendorItem.setVendorId("#");
         vendorItem.setVendorName("ভেন্ডর নাম");
         vendorItem.setVendorPhone("ফোন নাম্বার");
         vendorItem.setVendorInstitute("প্রতিষ্ঠানের নাম");
@@ -87,6 +105,12 @@ public class VendorListFragment extends Fragment {
         vendorItem.setVendorAction("অ্যাকশান");
 
         vendorItems.add(vendorItem);
+
+
+        getVendor();
+
+
+
 
         RecyclerViewVendorAdapter recyclerViewVendorAdapter = new RecyclerViewVendorAdapter(getContext(),vendorItems);
         recyclerView.setAdapter(recyclerViewVendorAdapter);
@@ -100,6 +124,60 @@ public class VendorListFragment extends Fragment {
         });
 
         return vendor;
+    }
+
+    private void getVendor(){
+        showProgressDialog();
+        String url = AllUrls.GetVendor+ DataHold.phn;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                parsedata(response);
+                vendorHolder=response;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("number","01700000000");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void parsedata(String response){
+        try{
+            JSONArray vendor = new JSONArray(response);
+            for(int i =0;i<vendor.length();i++){
+                JSONObject vObject = vendor.getJSONObject(i);
+                VendorItem vendorItem1=new VendorItem();
+                vendorItem1.setVendorId(vObject.getString("id"));
+                vendorItem1.setVendorName(vObject.getString("name"));
+                vendorItem1.setVendorInstitute(vObject.getString("org"));
+                vendorItem1.setVendorPhone(vObject.getString("phone"));
+                vendorItem1.setVendorAddress(vObject.getString("address"));
+                vendorItems.add(vendorItem1);
+
+                RecyclerViewVendorAdapter recyclerViewVendorAdapter = new RecyclerViewVendorAdapter(getContext(),vendorItems);
+                recyclerView.setAdapter(recyclerViewVendorAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                progressDialog.dismiss();
+
+            }
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
     }
 
     private void showDialog(){
@@ -127,5 +205,12 @@ public class VendorListFragment extends Fragment {
 
 
 
+    }
+
+    private void showProgressDialog(){
+        this.progressDialog= new ProgressDialog(getContext());
+        progressDialog.setCancelable(true);
+        progressDialog.setTitle("Getting Data");
+        progressDialog.show();
     }
 }
