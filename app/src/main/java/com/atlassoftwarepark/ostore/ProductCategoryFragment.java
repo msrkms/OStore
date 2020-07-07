@@ -1,6 +1,8 @@
 package com.atlassoftwarepark.ostore;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,13 +16,25 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.atlassoftwarepark.ostore.Adepter.ProductItem;
 import com.atlassoftwarepark.ostore.Adepter.RecyclerViewProductCategoryAdapter;
+import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
+import com.atlassoftwarepark.ostore.BackEnd.DateTimeConverter;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,10 +125,24 @@ public class ProductCategoryFragment extends Fragment {
 
         ImageButton closeDialogProduct;
         ImageView dateSelect;
-        final TextInputEditText textInputEditTextDate;
+        MaterialButton materialButtonAdd;
+        final TextInputEditText textInputEditTextDate,textInputEditTextProductCategory;
         closeDialogProduct=(ImageButton)addProduct.findViewById(R.id.closeDialogProduct);
         dateSelect=(ImageView)addProduct.findViewById(R.id.addProductDateSelect);
         textInputEditTextDate=(TextInputEditText)addProduct.findViewById(R.id.textInputEditTextAddProductDate);
+        textInputEditTextProductCategory=(TextInputEditText)addProduct.findViewById(R.id.textInputEditTextProductCategory);
+        materialButtonAdd=(MaterialButton) addProduct.findViewById(R.id.TransactionAddBtn);
+
+        materialButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String Category=textInputEditTextProductCategory.getText().toString();
+                String Date=textInputEditTextDate.getText().toString();
+                DateTimeConverter dateTimeConverter=new DateTimeConverter();
+
+
+            }
+        });
 
         dateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +156,7 @@ public class ProductCategoryFragment extends Fragment {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
                         textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
+
                     }
                 });
 
@@ -145,5 +174,7 @@ public class ProductCategoryFragment extends Fragment {
         });
 
     }
+
+
 
 }
