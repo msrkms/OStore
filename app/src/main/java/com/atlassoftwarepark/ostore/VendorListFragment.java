@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,9 +45,10 @@ public class VendorListFragment extends Fragment {
 
     LinearLayout linearAddVendor;
     RecyclerView recyclerView;
-    ArrayList<VendorItem> vendorItems;
+    List<VendorItem> vendorItems;
     ProgressDialog progressDialog;
-    String vendorHolder;
+    SearchView searchViewVendor;
+    RecyclerViewVendorAdapter recyclerViewVendorAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,6 +97,8 @@ public class VendorListFragment extends Fragment {
         View vendor = inflater.inflate(R.layout.fragment_vendor_list, container, false);
         linearAddVendor=(LinearLayout)vendor.findViewById(R.id.layoutAddVendor);
         recyclerView=(RecyclerView)vendor.findViewById(R.id.recyclerViewVendorList);
+        searchViewVendor=(SearchView)vendor.findViewById(R.id.searchVendor);
+
 
         vendorItems=new ArrayList<VendorItem>();
         VendorItem vendorItem=new VendorItem();
@@ -112,9 +117,10 @@ public class VendorListFragment extends Fragment {
 
 
 
-        RecyclerViewVendorAdapter recyclerViewVendorAdapter = new RecyclerViewVendorAdapter(getContext(),vendorItems);
+        recyclerViewVendorAdapter = new RecyclerViewVendorAdapter(vendorItems);
         recyclerView.setAdapter(recyclerViewVendorAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
 
         linearAddVendor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +128,8 @@ public class VendorListFragment extends Fragment {
                 showDialog();
             }
         });
+
+        search();
 
         return vendor;
     }
@@ -134,7 +142,6 @@ public class VendorListFragment extends Fragment {
             public void onResponse(String response) {
                 System.out.println(response);
                 parsedata(response);
-                vendorHolder=response;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -167,9 +174,10 @@ public class VendorListFragment extends Fragment {
                 vendorItem1.setVendorAddress(vObject.getString("address"));
                 vendorItems.add(vendorItem1);
 
-                RecyclerViewVendorAdapter recyclerViewVendorAdapter = new RecyclerViewVendorAdapter(getContext(),vendorItems);
+                recyclerViewVendorAdapter = new RecyclerViewVendorAdapter(vendorItems);
                 recyclerView.setAdapter(recyclerViewVendorAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setHasFixedSize(true);
 
                 progressDialog.dismiss();
 
@@ -205,6 +213,22 @@ public class VendorListFragment extends Fragment {
 
 
 
+    }
+
+    private void search(){
+        searchViewVendor.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                recyclerViewVendorAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerViewVendorAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
     private void showProgressDialog(){
