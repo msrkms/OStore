@@ -1,11 +1,20 @@
 package com.atlassoftwarepark.ostore.Adepter;
 
 public class VendorItem {
+    private String vendorId;
     private String vendorName;
     private String vendorPhone;
     private String vendorInstitute;
     private String vendorAddress;
     private String vendorAction;
+
+    public String getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
+    }
 
     public String getVendorName() {
         return vendorName;

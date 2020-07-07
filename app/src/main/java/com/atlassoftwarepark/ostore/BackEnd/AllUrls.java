@@ -7,4 +7,7 @@ public class AllUrls {
     public static final String Login=API+"submitlogin";
     public static final String Registraion=API+"submitreg";
 
+    public static final String GetVendor=API+"getvendor/";
+
+
 }
