@@ -64,6 +64,7 @@
                     android:padding="5dp"
                     >
                     <SearchView
+                        android:id="@+id/searchVendor"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/searchbackground"
