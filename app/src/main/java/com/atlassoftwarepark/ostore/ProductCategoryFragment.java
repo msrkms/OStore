@@ -1,9 +1,12 @@
 package com.atlassoftwarepark.ostore;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +33,7 @@ import com.atlassoftwarepark.ostore.Adepter.RecyclerViewVendorAdapter;
 import com.atlassoftwarepark.ostore.Adepter.VendorItem;
 import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
 import com.atlassoftwarepark.ostore.BackEnd.DataHold;
+import com.atlassoftwarepark.ostore.BackEnd.DateFormat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -38,7 +43,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +64,8 @@ public class ProductCategoryFragment extends Fragment {
     List<ProductItem> productItems;
     RecyclerViewProductCategoryAdapter recyclerViewProductCategoryAdapter;
     SearchView searchViewCategory;
+    DatePickerDialog datePickerDialog;
+    Calendar calendar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -169,6 +179,10 @@ public class ProductCategoryFragment extends Fragment {
             }
         });
 
+
+
+
+
         dateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,17 +190,22 @@ public class ProductCategoryFragment extends Fragment {
                 final MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
                 builder.setTitleText("Select a Date");
                 final MaterialDatePicker addProductDatePicker = builder.build();
+
                 addProductDatePicker.show(getFragmentManager(),"DatePicker");
                 addProductDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
-                        
+                        //textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
+                        DateFormat dateFormat = new DateFormat();
+                        String dateString =dateFormat.dateDecode(addProductDatePicker.getHeaderText());
+                        System.out.println("Date:"+dateString);
+                        textInputEditTextDate.setText(dateString);
                     }
                 });
 
             }
         });
+
 
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).setView(addProduct).create();
         alertDialog.show();
