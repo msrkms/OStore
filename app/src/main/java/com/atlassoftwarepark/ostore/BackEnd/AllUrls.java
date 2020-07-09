@@ -9,5 +9,7 @@ public class AllUrls {
 
     public static final String GetVendor=API+"getvendor/";
 
+    public static final String GetCategory=API+"getcategory/";
+
 
 }
