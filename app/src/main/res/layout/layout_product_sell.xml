@@ -24,12 +24,11 @@
             >
 
             <TextView
-                android:id="@+id/productCategory"
+                android:id="@+id/textViewSL"
                 android:padding="5dp"
-                android:layout_width="90dp"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/productCategory"/>
+                android:text="#"/>
             <TextView
                 android:id="@+id/productName"
                 android:padding="5dp"
@@ -37,48 +36,47 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/productname"/>
+
+
             <TextView
-                android:id="@+id/buyDate"
+                android:id="@+id/productQty"
                 android:padding="5dp"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/buyDate"/>
-            <TextView
-                android:id="@+id/quantity"
+                android:text="পরিমাণ"/>
+
+            <EditText
+                android:id="@+id/editTextproductQty"
                 android:padding="5dp"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/quantity"/>
+                android:text="পরিমাণ"/>
+
             <TextView
-                android:id="@+id/vendor"
+                android:id="@+id/tvUnitPrice"
                 android:padding="5dp"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/vendor"/>
+                android:text="একক মূল্য	"/>
             <TextView
-                android:id="@+id/unitPrice"
+                android:id="@+id/tvAction"
                 android:padding="5dp"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/unitprice"/>
-            <TextView
-                android:id="@+id/total"
-                android:padding="5dp"
+                android:text="@string/loanAction"/>
+
+            <ImageView
+                android:id="@+id/deleteItemImageView"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/total"/>
-            <TextView
-                android:id="@+id/action"
-                android:padding="5dp"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/actionBangla"/>
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                />
+
 
         </LinearLayout>
 
