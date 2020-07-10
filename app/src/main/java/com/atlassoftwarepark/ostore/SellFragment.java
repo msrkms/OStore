@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -24,7 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.atlassoftwarepark.ostore.Adepter.ProductSellRecyclerAdepter;
+import com.atlassoftwarepark.ostore.Adepter.RecyclerViewProductSellAdapter;
 import com.atlassoftwarepark.ostore.Adepter.RecylerViewProductSellAdepter;
+import com.atlassoftwarepark.ostore.Adepter.SelectedProductItem;
 import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
 import com.atlassoftwarepark.ostore.BackEnd.DataHold;
 import com.atlassoftwarepark.ostore.Object.Category;
@@ -58,7 +61,9 @@ public class SellFragment extends Fragment {
     private ArrayList<Customer> customers;
     private RecyclerView recyclerViewProduct,recyclerViewProductSell;
     private ArrayList<ProductSell> productSells=new ArrayList<ProductSell>();
-
+    //new ArrayList
+    ArrayList<SelectedProductItem> selectedProductItems;
+    RecyclerViewProductSellAdapter recyclerViewProductsellAdapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -198,6 +203,22 @@ public class SellFragment extends Fragment {
 
             }
         });
+
+
+        //selected product item
+        selectedProductItems = new ArrayList<SelectedProductItem>();
+        SelectedProductItem selectedProductItem = new SelectedProductItem();
+        selectedProductItem.setS_productSL("1");
+        selectedProductItem.setS_productName("Something");
+        selectedProductItem.setS_productQuantity("");
+        selectedProductItem.setS_productUnitPrice("10");
+
+        selectedProductItems.add(selectedProductItem);
+
+        recyclerViewProductsellAdapter = new RecyclerViewProductSellAdapter(selectedProductItems);
+        recyclerViewProductSell.setAdapter(recyclerViewProductsellAdapter);
+        recyclerViewProductSell.setHasFixedSize(true);
+        recyclerViewProductSell.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return viewSell;
     }

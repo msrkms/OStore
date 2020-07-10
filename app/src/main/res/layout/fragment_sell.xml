@@ -170,15 +170,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/materialTextViewAddNewCustomer" />
 
+<HorizontalScrollView
+    android:id="@+id/horizontalList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textView12"
+    >
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewProductSell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProductSell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/selected_product_list_layout"
+         />
+
+</HorizontalScrollView>
+
 
                 <TextView
                     android:id="@+id/textViewTotalPrice"
@@ -189,7 +199,7 @@
                     android:text="সর্বমোট দাম: 0 টাকা"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewProductSell" />
+                    app:layout_constraintTop_toBottomOf="@+id/horizontalList" />
 
                 <HorizontalScrollView
                     android:id="@+id/installmentLayout"
