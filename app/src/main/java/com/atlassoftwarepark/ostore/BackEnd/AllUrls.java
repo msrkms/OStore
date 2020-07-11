@@ -11,5 +11,8 @@ public class AllUrls {
 
     public static final String GetCategory=API+"getcategory/";
 
+    public static final String GetProduct=API+"getproduct/";
+
+    public static final String GetCustomer=API+"customer/";
 
 }

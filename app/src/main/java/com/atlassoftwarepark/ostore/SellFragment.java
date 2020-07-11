@@ -4,7 +4,11 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +17,31 @@ import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.atlassoftwarepark.ostore.Adepter.ProductSellRecyclerAdepter;
+import com.atlassoftwarepark.ostore.Adepter.RecyclerViewProductSellAdapter;
+import com.atlassoftwarepark.ostore.Adepter.RecylerViewProductSellAdepter;
+import com.atlassoftwarepark.ostore.Adepter.SelectedProductItem;
+import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
+import com.atlassoftwarepark.ostore.BackEnd.DataHold;
+import com.atlassoftwarepark.ostore.Object.Category;
+import com.atlassoftwarepark.ostore.Object.Customer;
+import com.atlassoftwarepark.ostore.Object.Product;
+import com.atlassoftwarepark.ostore.Object.ProductSell;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +53,19 @@ import java.util.List;
  */
 public class SellFragment extends Fragment {
 
+    private TextView textViewTotalPrice;
     private Spinner spinnerCategory,spinnerTimeType,spinnerCustomer,spinnersellType;
     private HorizontalScrollView horizontalScrollViewInstallment;
     private MaterialButton materialButtonSell;
     private MaterialTextView materialAddNewCustomer;
-
+    private ArrayList<Category> categories;
+    private ArrayList<Product> products;
+    private ArrayList<Customer> customers;
+    private RecyclerView recyclerViewProduct,recyclerViewProductSell;
+    private ArrayList<ProductSell> productSells=new ArrayList<ProductSell>();
+    //new ArrayList
+    ArrayList<SelectedProductItem> selectedProductItems;
+    RecyclerViewProductSellAdapter recyclerViewProductsellAdapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,21 +113,98 @@ public class SellFragment extends Fragment {
         View viewSell= inflater.inflate(R.layout.fragment_sell, container, false);
         spinnerCategory=(Spinner) viewSell.findViewById(R.id.spinnerAllProduct);
         materialAddNewCustomer=(MaterialTextView)viewSell.findViewById(R.id.materialTextViewAddNewCustomer);
+        recyclerViewProduct=(RecyclerView) viewSell.findViewById(R.id.recylerviewProduct) ;
+        recyclerViewProductSell=(RecyclerView) viewSell.findViewById(R.id.recyclerViewProductSell);
+        textViewTotalPrice=(TextView) viewSell.findViewById(R.id.textViewTotalPrice);
 
-        materialAddNewCustomer.setOnClickListener(new View.OnClickListener() {
+        ProductSellRecyclerAdepter productSellRecyclerAdepter=new ProductSellRecyclerAdepter(getContext(),productSells);
+        recyclerViewProductSell.setAdapter(productSellRecyclerAdepter);
+        recyclerViewProductSell.setVisibility(View.GONE);
+        ProductSell productSellTitle=new ProductSell();
+        productSellTitle.setId(0);
+        productSellTitle.setProduct(new Product());
+        productSellTitle.setQty(0);
+        productSells.add(productSellTitle);
+
+
+        recyclerViewProduct.addOnItemTouchListener(new ProductGridAdepter.RecyclerTouchListener(getContext(), recyclerViewProduct, new ProductGridAdepter.ClickListener() {
             @Override
-            public void onClick(View v) {
-                showDialog();
+            public void onClick(View view, int position) {
+                if(DataHold.productSells!=null){
+                    productSells=DataHold.productSells;
+                    System.out.println("ss");
+                }
+                recyclerViewProductSell.setVisibility(View.VISIBLE);
+                ProductSell productSell=new ProductSell();
+                if(productSells.size()>1){
+                    boolean result=Search(productSells,products.get(position));
+                    if(!result){
+                        productSell.setId(productSells.size());
+                        productSell.setProduct(products.get(position));
+                        productSell.setQty(0);
+                        productSells.add(productSell);
+                    }
+                }else{
+                    productSell.setId(1);
+                    productSell.setProduct(products.get(position));
+                    productSell.setQty(0);
+                    productSells.add(productSell);
+                }
+
+                DataHold.productSells=productSells;
+                ProductSellRecyclerAdepter productSellRecyclerAdepter=new ProductSellRecyclerAdepter(getContext(),productSells);
+                recyclerViewProductSell.setAdapter(productSellRecyclerAdepter);
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+
+
+
+
+
+        recyclerViewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(DataHold.position);
             }
         });
 
 
-        ArrayAdapter<String> arrayAdapterCategory=new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.support_simple_spinner_dropdown_item,
-                getCategory()
-        );
-        spinnerCategory.setAdapter(arrayAdapterCategory);
+        categories=new ArrayList<Category>();
+        products=new ArrayList<Product>();
+        customers =new ArrayList<Customer>();
+
+        getCategoryFromAPI();
+        getProductFromAPI();
+        getCustomerFromAPI();
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i>0){
+                    String category=categories.get(i-1).getCategory();
+                  ArrayList<Product> productsByCategory= resetProduct(category,products);
+                    System.out.println(productsByCategory.size());
+                    ProductGridAdepter productGridAdepter=new ProductGridAdepter(getContext(),productsByCategory);
+                    recyclerViewProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
+                    recyclerViewProduct.setAdapter(productGridAdepter);
+                }else {
+                    getProductFromAPI();
+                    setProductsRecyclerView();
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         spinnerTimeType=(Spinner) viewSell.findViewById(R.id.spinnerinterestTimeType);
         ArrayAdapter<String> arrayAdapterTimeType=new ArrayAdapter<String>(
@@ -105,12 +215,7 @@ public class SellFragment extends Fragment {
         spinnerTimeType.setAdapter(arrayAdapterTimeType);
 
         spinnerCustomer=(Spinner) viewSell.findViewById(R.id.spinnerCustomers);
-        ArrayAdapter<String> arrayAdapterCustomer=new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.support_simple_spinner_dropdown_item,
-                getCustomer()
-        );
-        spinnerCustomer.setAdapter(arrayAdapterCustomer);
+
 
         spinnersellType=(Spinner) viewSell.findViewById(R.id.spinnerSellType);
         ArrayAdapter<String> arrayAdapterSellType=new ArrayAdapter<String>(
@@ -145,14 +250,43 @@ public class SellFragment extends Fragment {
             }
         });
 
+
+        //selected product item
+        selectedProductItems = new ArrayList<SelectedProductItem>();
+        SelectedProductItem selectedProductItem = new SelectedProductItem();
+        selectedProductItem.setS_productSL("1");
+        selectedProductItem.setS_productName("Something");
+        selectedProductItem.setS_productQuantity("");
+        selectedProductItem.setS_productUnitPrice("10");
+
+        selectedProductItems.add(selectedProductItem);
+
+        recyclerViewProductsellAdapter = new RecyclerViewProductSellAdapter(selectedProductItems);
+        recyclerViewProductSell.setAdapter(recyclerViewProductsellAdapter);
+        recyclerViewProductSell.setHasFixedSize(true);
+        recyclerViewProductSell.setLayoutManager(new LinearLayoutManager(getContext()));
+
         return viewSell;
+    }
+
+    private ArrayList<Product> resetProduct(String category,ArrayList<Product> producttemp){
+
+        for(int i=0;i<producttemp.size();i++){
+            if(!producttemp.get(i).getCategory().equals(category)){
+                producttemp.remove(i);
+            }
+        }
+
+        return producttemp;
+
     }
 
     private List<String> getCategory() {
         List<String> stringsCategory=new ArrayList<String>();
         stringsCategory.add("All Product");
-        stringsCategory.add("Product 1");
-        stringsCategory.add("Product 2");
+        for (int i=0;i<categories.size();i++){
+            stringsCategory.add(categories.get(i).getCategory());
+        }
 
         return stringsCategory;
 
@@ -177,10 +311,12 @@ public class SellFragment extends Fragment {
 
     }
     private List<String> getCustomer() {
-        List<String> cutomer=new ArrayList<String>();
-        cutomer.add("Select One");
-        cutomer.add("Customer One");
 
+        List<String> cutomer=new ArrayList<String>();
+
+        for (int i=0;i<customers.size();i++){
+            cutomer.add(customers.get(i).getName());
+        }
         return cutomer;
 
     }
@@ -211,5 +347,161 @@ public class SellFragment extends Fragment {
 
     }
 
+
+    private void getCategoryFromAPI(){
+        String url = AllUrls.GetCategory+ DataHold.phn;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                parseCategories(response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error",error.toString());
+
+
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void getProductFromAPI(){
+        String url = AllUrls.GetProduct+ DataHold.phn;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                parseProduct(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error",error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void getCustomerFromAPI(){
+        String url = AllUrls.GetCustomer+ DataHold.phn;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                parseCustomer(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error",error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void parseCustomer(String response){
+        try{
+            customers=new ArrayList<Customer>();
+            JSONArray jsonArrayCustomer = new JSONArray(response);
+            for(int i =0;i<jsonArrayCustomer.length();i++){
+                JSONObject jsonObject = jsonArrayCustomer.getJSONObject(i);
+                Customer customer =new Customer();
+                customer.setId(jsonObject.getInt("id"));
+                customer.setName(jsonObject.getString("name"));
+
+                customers.add(customer);
+
+            }
+            setSpinnerCustomer();
+
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void parseCategories(String response){
+        try{
+            categories=new ArrayList<Category>();
+            JSONArray jsonArrayCategory = new JSONArray(response);
+            for(int i =0;i<jsonArrayCategory.length();i++){
+                JSONObject jsonObject = jsonArrayCategory.getJSONObject(i);
+                Category category= new Category();
+                category.setId(jsonObject.getInt("id"));
+                category.setCategory(jsonObject.getString("cate"));
+                categories.add(category);
+
+            }
+            setCategorySpinner();
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void parseProduct(String response){
+        try{
+            products=new ArrayList<Product>();
+            JSONArray jsonArrayProduct = new JSONArray(response);
+            for(int i =0;i<jsonArrayProduct.length();i++){
+                JSONObject jsonObject = jsonArrayProduct.getJSONObject(i);
+                Product product=new Product();
+                product.setId(jsonObject.getInt("id"));
+                product.setCategory(jsonObject.getString("group"));
+                product.setProductName(jsonObject.getString("productName"));
+                product.setStock(jsonObject.getInt("stock"));
+                product.setUnitPrice(jsonObject.getInt("unitprice"));
+                products.add(product);
+
+            }
+            setProductsRecyclerView();
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void setProductsRecyclerView(){
+        ProductGridAdepter productGridAdepter=new ProductGridAdepter(getContext(),products);
+        recyclerViewProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerViewProduct.setAdapter(productGridAdepter);
+    }
+
+
+    private void setCategorySpinner(){
+        ArrayAdapter<String> arrayAdapterCategory=new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.support_simple_spinner_dropdown_item,
+                getCategory()
+        );
+        spinnerCategory.setAdapter(arrayAdapterCategory);
+    }
+
+    private void setSpinnerCustomer(){
+        ArrayAdapter<String> arrayAdapterCustomer=new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.support_simple_spinner_dropdown_item,
+                getCustomer()
+        );
+        spinnerCustomer.setAdapter(arrayAdapterCustomer);
+    }
+
+
+
+    private boolean Search(ArrayList<ProductSell> productSells,Product product){
+        boolean search=false;
+        for (int i=0;i<productSells.size();i++){
+            if(productSells.get(i).getProduct().getId()==product.getId()){
+                search=true;
+            }
+        }
+        return search;
+    }
 
 }
