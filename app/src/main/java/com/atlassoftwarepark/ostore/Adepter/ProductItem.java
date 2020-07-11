@@ -1,9 +1,20 @@
 package com.atlassoftwarepark.ostore.Adepter;
 
+import com.android.volley.toolbox.StringRequest;
+
 public class ProductItem {
+    private String P_categoryID;
     private String p_categoryName;
     private String p_registeredDate;
     private String p_action;
+
+    public String getP_categoryID() {
+        return P_categoryID;
+    }
+
+    public void setP_categoryID(String p_categoryID) {
+        P_categoryID = p_categoryID;
+    }
 
     public String getP_categoryName() {
         return p_categoryName;
