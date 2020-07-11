@@ -1,8 +1,12 @@
 package com.atlassoftwarepark.ostore;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,19 +14,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.atlassoftwarepark.ostore.Adepter.ProductItem;
 import com.atlassoftwarepark.ostore.Adepter.RecyclerViewProductCategoryAdapter;
-import com.atlassoftwarepark.ostore.BackEnd.DateTimeConverter;
+import com.atlassoftwarepark.ostore.Adepter.RecyclerViewVendorAdapter;
+import com.atlassoftwarepark.ostore.Adepter.VendorItem;
+import com.atlassoftwarepark.ostore.BackEnd.AllUrls;
+import com.atlassoftwarepark.ostore.BackEnd.DataHold;
+import com.atlassoftwarepark.ostore.BackEnd.DateFormat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,8 +60,12 @@ public class ProductCategoryFragment extends Fragment {
 
     LinearLayout linearAddProduct;
     RecyclerView recyclerView;
-
-    ArrayList<ProductItem> productItems;
+    ProgressDialog progressDialog;
+    List<ProductItem> productItems;
+    RecyclerViewProductCategoryAdapter recyclerViewProductCategoryAdapter;
+    SearchView searchViewCategory;
+    DatePickerDialog datePickerDialog;
+    Calendar calendar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,18 +115,35 @@ public class ProductCategoryFragment extends Fragment {
 
         linearAddProduct=(LinearLayout)productCategory.findViewById(R.id.layoutAddProduct);
         recyclerView=(RecyclerView)productCategory.findViewById(R.id.recyclerViewProductCategoryList);
+        searchViewCategory=(SearchView)productCategory.findViewById(R.id.searchProductCategory);
 
         productItems=new ArrayList<ProductItem>();
         ProductItem productItem = new ProductItem();
+        productItem.setP_categoryID("#");
         productItem.setP_categoryName("ক্যাটাগরি নাম");
         productItem.setP_registeredDate("নিবন্ধিত তারিখ");
         productItem.setP_action("অ্যাকশন");
 
         productItems.add(productItem);
 
-        RecyclerViewProductCategoryAdapter recyclerViewProductCategoryAdapter = new RecyclerViewProductCategoryAdapter(getContext(),productItems);
+        getCategory();
+
+        recyclerViewProductCategoryAdapter = new RecyclerViewProductCategoryAdapter(productItems);
         recyclerView.setAdapter(recyclerViewProductCategoryAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchViewCategory.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerViewProductCategoryAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         linearAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,11 +174,14 @@ public class ProductCategoryFragment extends Fragment {
             public void onClick(View view) {
                 String Category=textInputEditTextProductCategory.getText().toString();
                 String Date=textInputEditTextDate.getText().toString();
-                DateTimeConverter dateTimeConverter=new DateTimeConverter();
-
+                System.out.println(Category+Date);
 
             }
         });
+
+
+
+
 
         dateSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,17 +190,22 @@ public class ProductCategoryFragment extends Fragment {
                 final MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
                 builder.setTitleText("Select a Date");
                 final MaterialDatePicker addProductDatePicker = builder.build();
+
                 addProductDatePicker.show(getFragmentManager(),"DatePicker");
                 addProductDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
-
+                        //textInputEditTextDate.setText(addProductDatePicker.getHeaderText());
+                        DateFormat dateFormat = new DateFormat();
+                        String dateString =dateFormat.dateDecode(addProductDatePicker.getHeaderText());
+                        System.out.println("Date:"+dateString);
+                        textInputEditTextDate.setText(dateString);
                     }
                 });
 
             }
         });
+
 
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).setView(addProduct).create();
         alertDialog.show();
@@ -161,6 +217,62 @@ public class ProductCategoryFragment extends Fragment {
             }
         });
 
+    }
+    private void showProgressDialog(){
+        this.progressDialog= new ProgressDialog(getContext());
+        progressDialog.setCancelable(true);
+        progressDialog.setTitle("Getting Data");
+        progressDialog.show();
+    }
+
+    private void getCategory(){
+        showProgressDialog();
+        String url = AllUrls.GetCategory+ DataHold.phn;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                parsedata(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("number","01700000000");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+    private void parsedata(String response){
+        try{
+            JSONArray pCategory = new JSONArray(response);
+            for(int i =0;i<pCategory.length();i++){
+                JSONObject pObject = pCategory.getJSONObject(i);
+                ProductItem productItem =new ProductItem();
+                productItem.setP_categoryID(pObject.getString("id"));
+                productItem.setP_categoryName(pObject.getString("cate"));
+                productItem.setP_registeredDate(pObject.getString("date"));
+                productItems.add(productItem);
+
+                recyclerViewProductCategoryAdapter = new RecyclerViewProductCategoryAdapter(productItems);
+                recyclerView.setAdapter(recyclerViewProductCategoryAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setHasFixedSize(true);
+                progressDialog.dismiss();
+
+            }
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
     }
 
 }

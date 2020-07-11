@@ -54,7 +54,20 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="5dp"
+                    >
+                    <SearchView
+                        android:id="@+id/searchProductCategory"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searchbackground"
+                        />
 
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_marginTop="20dp"

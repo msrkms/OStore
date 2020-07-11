@@ -44,7 +44,7 @@ public class RecyclerViewVendorAdapter extends RecyclerView.Adapter<RecyclerView
         holder.txtvendorPhone.setText(vendorItems.get(position).getVendorPhone());
         holder.txtvendorInstitute.setText(vendorItems.get(position).getVendorInstitute());
         holder.txtvendorAddress.setText(vendorItems.get(position).getVendorAddress());
-        if(position==0){
+        if(holder.txtVendorID.getText().toString().equals("#")){
             holder.deleteVendor.setVisibility(View.GONE);
             holder.txtvendorAction.setText(vendorItems.get(position).getVendorAction());
         }
@@ -91,6 +91,8 @@ public class RecyclerViewVendorAdapter extends RecyclerView.Adapter<RecyclerView
             notifyDataSetChanged();
         }
     };
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtVendorID,txtvendorName, txtvendorPhone, txtvendorInstitute, txtvendorAddress, txtvendorAction;
