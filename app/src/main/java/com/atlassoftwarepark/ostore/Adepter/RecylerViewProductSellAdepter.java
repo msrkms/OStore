@@ -81,6 +81,7 @@ public class RecylerViewProductSellAdepter extends RecyclerView.Adapter<RecylerV
             textViewUnitPrice=(TextView) itemView.findViewById(R.id.tvUnitPrice);
             editTextQty=(EditText) itemView.findViewById(R.id.editTextproductQty);
             imageViewDelete=(ImageView) itemView.findViewById(R.id.deleteItemImageView);
+
         }
     }
 }

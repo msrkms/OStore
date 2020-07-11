@@ -48,10 +48,11 @@ public class LogIn extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*  String PhoneNumber=textInputEditTextPhoneNumber.getText().toString();
-               String Password=textInputEditTextPassword.getText().toString();*/
 
-                String PhoneNumber="01700000000";
+               // String PhoneNumber=textInputEditTextPhoneNumber.getText().toString();
+            //   String Password=textInputEditTextPassword.getText().toString();
+
+               String PhoneNumber="01700000000";
                 String Password="admin123.com";
                Login(PhoneNumber,Password);
             }
