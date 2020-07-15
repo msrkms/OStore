@@ -45,7 +45,7 @@ public class ProductGridAdepter extends RecyclerView.Adapter<ProductGridAdepter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.textViewProductQty.setText(String.valueOf(products.get(position).getStock()));
-        holder.materialButtonProduct.setText(products.get(position).getProductName());
+        holder.textViewProduct.setText(products.get(position).getProductName());
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -70,12 +70,12 @@ public class ProductGridAdepter extends RecyclerView.Adapter<ProductGridAdepter.
 
 
         TextView textViewProductQty;
-        MaterialButton materialButtonProduct;
+        TextView textViewProduct;
         CardView cardView ;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            materialButtonProduct=(MaterialButton) itemView.findViewById(R.id.materialButtonProduct);
+            textViewProduct=(TextView) itemView.findViewById(R.id.textViewProduct);
             textViewProductQty=(TextView) itemView.findViewById(R.id.textViewProductQty);
             cardView=(CardView) itemView.findViewById(R.id.cardViewProductItem_id) ;
 
