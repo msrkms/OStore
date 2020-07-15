@@ -13,22 +13,30 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        >
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButtonProduct"
+        <TextView
+            android:id="@+id/textViewProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Mountain Dew" />
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="Mountain Dew"
+            android:padding="5dp"
+            />
 
         <TextView
             android:id="@+id/textViewProductQty"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Available Qty"
-            android:textColor="#2d2d2d"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/oval_shape"
             android:textSize="13sp" />
 
     </LinearLayout>
