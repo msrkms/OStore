@@ -15,4 +15,6 @@ public class AllUrls {
 
     public static final String GetCustomer=API+"customer/";
 
+    public static final String QuickSell=API+"qsellsubmit";
+
 }

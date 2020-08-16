@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,18 +18,23 @@ import com.atlassoftwarepark.ostore.BackEnd.DataHold;
 import com.atlassoftwarepark.ostore.Object.Product;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
-public class ProductGridAdepter extends RecyclerView.Adapter<ProductGridAdepter.MyViewHolder> {
+public class ProductGridAdepter extends RecyclerView.Adapter<ProductGridAdepter.MyViewHolder> implements Filterable {
     private Context context ;
     private List<Product> products ;
+    private List<Product> productListFull;
+
 
     private View viewParrent;
 
     public ProductGridAdepter(Context context, List<Product> products) {
         this.context = context;
         this.products = products;
+        productListFull=new ArrayList<>(products);
     }
 
     @Override
@@ -38,6 +45,38 @@ public class ProductGridAdepter extends RecyclerView.Adapter<ProductGridAdepter.
         ProductGridAdepter.MyViewHolder viewHolder=new ProductGridAdepter.MyViewHolder(view);
         return viewHolder;
     }
+
+    @Override
+    public Filter getFilter() {
+        return productFilter;
+    }
+
+    private Filter productFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Product> filteredList = new ArrayList<>();
+            if(constraint.toString().isEmpty()){
+                filteredList.addAll(productListFull);
+            }
+            else {
+                for(Product product: productListFull){
+                    if(product.getCategory().toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filteredList.add(product);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values=filteredList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            products.clear();
+            products.addAll((Collection<? extends Product>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
 
 

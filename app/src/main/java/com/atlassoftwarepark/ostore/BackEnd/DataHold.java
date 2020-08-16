@@ -14,7 +14,10 @@ public class DataHold {
     public static int position;
 
     public static ArrayList<ProductSell> productSells;
+
+    public static ArrayList<ProductSell> productSellsQsell;
     public static ArrayList<Integer> postions;
+    public static ArrayList<Product> products;
 
     public static String price;
 }

@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.atlassoftwarepark.ostore.ProductGridAdepter;
 import com.atlassoftwarepark.ostore.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ProductSellRecyclerAdepter extends RecyclerView.Adapter<ProductSellRecyclerAdepter.ViewHolder> {
@@ -50,6 +52,7 @@ public class ProductSellRecyclerAdepter extends RecyclerView.Adapter<ProductSell
     @Override
     public void onBindViewHolder(@NonNull final ProductSellRecyclerAdepter.ViewHolder holder, final int position) {
 
+        System.out.println(position);
         if(position==0){
             holder.imageViewDelete.setVisibility(View.GONE);
             holder.editTextQty.setVisibility(View.GONE);
@@ -63,6 +66,13 @@ public class ProductSellRecyclerAdepter extends RecyclerView.Adapter<ProductSell
             holder.editTextQty.setText(String.valueOf(productSellList.get(position).getQty()));
 
         }
+        holder.imageViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                productSellList.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
         holder.editTextQty.addTextChangedListener(new TextWatcher() {
             @Override
@@ -100,6 +110,8 @@ public class ProductSellRecyclerAdepter extends RecyclerView.Adapter<ProductSell
     public int getItemCount() {
         return productSellList.size();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewSl,textViewProductName, textViewQty, textViewUnitPrice, textViewAction,textViewPrice;
@@ -180,7 +192,6 @@ public class ProductSellRecyclerAdepter extends RecyclerView.Adapter<ProductSell
            totalPrice=totalPrice+(productSellList.get(i).getProduct().getUnitPrice()*productSellList.get(i).getQty());
            System.out.println(productSellList.get(i).getQty());
        }
-        DataHold.productSells=productSellList;
        return totalPrice;
 
     }

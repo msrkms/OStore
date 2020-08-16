@@ -49,9 +49,8 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               // String PhoneNumber=textInputEditTextPhoneNumber.getText().toString();
+             //   String PhoneNumber=textInputEditTextPhoneNumber.getText().toString();
             //   String Password=textInputEditTextPassword.getText().toString();
-
                String PhoneNumber="01700000000";
                 String Password="admin123.com";
                Login(PhoneNumber,Password);
@@ -100,7 +99,16 @@ public class LogIn extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
+                new MaterialAlertDialogBuilder(LogIn.this)
+                        .setTitle("Wanring")
+                        .setMessage("Server Down")
+                        .setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
             }
         }){
             @Override

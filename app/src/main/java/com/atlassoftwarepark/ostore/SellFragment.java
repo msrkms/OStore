@@ -1,6 +1,8 @@
 package com.atlassoftwarepark.ostore;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -53,6 +55,7 @@ import java.util.List;
  */
 public class SellFragment extends Fragment {
 
+    private ArrayList<Product> productArrayList;
     private TextView textViewTotalPrice;
     private Spinner spinnerCategory,spinnerTimeType,spinnerCustomer,spinnersellType;
     private HorizontalScrollView horizontalScrollViewInstallment;
@@ -63,6 +66,7 @@ public class SellFragment extends Fragment {
     private ArrayList<Customer> customers;
     private RecyclerView recyclerViewProduct,recyclerViewProductSell;
     private ArrayList<ProductSell> productSells=new ArrayList<ProductSell>();
+    private ProductGridAdepter productGridAdepter;
     //new ArrayList
     ArrayList<SelectedProductItem> selectedProductItems;
     RecyclerViewProductSellAdapter recyclerViewProductsellAdapter;
@@ -111,6 +115,7 @@ public class SellFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewSell= inflater.inflate(R.layout.fragment_sell, container, false);
+
         spinnerCategory=(Spinner) viewSell.findViewById(R.id.spinnerAllProduct);
         materialAddNewCustomer=(MaterialTextView)viewSell.findViewById(R.id.materialTextViewAddNewCustomer);
         recyclerViewProduct=(RecyclerView) viewSell.findViewById(R.id.recylerviewProduct) ;
@@ -182,22 +187,37 @@ public class SellFragment extends Fragment {
 
         getCategoryFromAPI();
         getProductFromAPI();
+
         getCustomerFromAPI();
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i>0){
                     String category=categories.get(i-1).getCategory();
-                  ArrayList<Product> productsByCategory= resetProduct(category,products);
-                    System.out.println(productsByCategory.size());
+                    System.out.println(category);
+                    productGridAdepter.getFilter().filter(category);
+                }else{
+                    getProductFromAPI();
+                    setProductsRecyclerView();
+                }
+
+                /*if(i>0){
+
+
+                    String category=categories.get(i-1).getCategory();
+                  ArrayList<Product> productsByCategory= resetProduct(category,productArrayList);
+                    System.out.println(productsByCategory.size()+" "+productArrayList.size());
                     ProductGridAdepter productGridAdepter=new ProductGridAdepter(getContext(),productsByCategory);
                     recyclerViewProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
                     recyclerViewProduct.setAdapter(productGridAdepter);
                 }else {
+                    if(productArrayList!=null){
+                        productArrayList.clear();
+                    }
                     getProductFromAPI();
                     setProductsRecyclerView();
-
-                }
+                    DataHold.products=products;
+                }*/
             }
 
             @Override
@@ -206,6 +226,12 @@ public class SellFragment extends Fragment {
             }
         });
 
+        materialAddNewCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
         spinnerTimeType=(Spinner) viewSell.findViewById(R.id.spinnerinterestTimeType);
         ArrayAdapter<String> arrayAdapterTimeType=new ArrayAdapter<String>(
                 getActivity(),
@@ -271,13 +297,13 @@ public class SellFragment extends Fragment {
 
     private ArrayList<Product> resetProduct(String category,ArrayList<Product> producttemp){
 
-        for(int i=0;i<producttemp.size();i++){
-            if(!producttemp.get(i).getCategory().equals(category)){
-                producttemp.remove(i);
+        ArrayList<Product> temp=producttemp;
+        for(int i=0;i<temp.size();i++){
+            if(!temp.get(i).getCategory().equals(category)){
+                temp.remove(i);
             }
         }
-
-        return producttemp;
+        return temp;
 
     }
 
@@ -459,6 +485,7 @@ public class SellFragment extends Fragment {
                 product.setUnitPrice(jsonObject.getInt("unitprice"));
                 products.add(product);
 
+
             }
             setProductsRecyclerView();
 
@@ -468,7 +495,7 @@ public class SellFragment extends Fragment {
     }
 
     private void setProductsRecyclerView(){
-        ProductGridAdepter productGridAdepter=new ProductGridAdepter(getContext(),products);
+         productGridAdepter=new ProductGridAdepter(getContext(),products);
         recyclerViewProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewProduct.setAdapter(productGridAdepter);
     }
